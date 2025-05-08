@@ -1,0 +1,17 @@
+{% extends "chat/layout.html" %} 
+{% load static %} 
+
+{% block body %}
+<h3>Your Chat Rooms</h3>
+
+<p>What chat room would you like to enter?</p>
+<br />
+{% if rooms %}
+    {% for room in rooms %}
+        <button id="room-selection" value="{{ room.id }}"><p id="room-selection-name">{{ room.name }}</p> <p id="member-count">Members: {{ room.members.count }}</p></button>
+    {% endfor %}
+{% endif %}
+
+{% endblock %} {% block script %}
+<script src="{% static 'chat/index.js' %}"></script>
+{% endblock %}

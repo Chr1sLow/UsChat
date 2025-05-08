@@ -1,0 +1,25 @@
+{% extends "chat/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<h2>New Chat</h2>
+
+{% if message %}
+<div>{{ message }}</div>
+{% endif %}
+
+<form id="create-chat-form" method="post">
+    <div class="form-group">
+        <input id="chat-name" autocomplete="off" required="true" class="form-control mb-3" autofocus type="text" name="chat_name" placeholder="Chat Name" />
+    </div>
+    <div class="form-group">
+        <input id="chat-members" autocomplete="off" required="true" class="form-control mb-3" type="text" name="members" placeholder="Chat Members" />
+    </div>
+    <input class="btn btn-primary" type="submit" value="Create" />
+</form>
+
+{% endblock %}
+{% block script %}
+<script src="{% static 'chat/create_chat.js' %}"></script>
+{% endblock %}

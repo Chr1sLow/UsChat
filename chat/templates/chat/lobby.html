@@ -1,0 +1,104 @@
+{% extends "chat/layout.html" %} 
+{% load static %} 
+
+{% block body %}
+<div id="chat-room-view" class="container row">
+    <h3>{{ room.name }}</h3>
+    <div id="chat-area" class="col-9">
+        <div id="chat-log"></div>
+        
+    </div>
+    <div id="members" class="col-3">
+        <h3>Members</h3>
+        {% for member in members %}
+            {% if owner.username == member.username %}
+                <div id="member{{ member.id }}" class="dropdown">
+                    <a id="member" href="{% url 'profile' owner.id %}" class="dropbtn">{{ owner.username }}</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'profile' owner.id %}">Profile</a>
+                    </div>
+                </div>
+            {% else %}
+                <div id="member{{ member.id }}" class="dropdown">
+                    <a id="member" href="{% url 'profile' member.id %}" class="dropbtn">{{ member.username }}</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'profile' member.id %}">Profile</a>
+                        {% if user.id == owner.id %}
+                        <a data-userid="{{ member.id }}" id="kick" href="{% url 'kick' room.id member.id %}">Kick</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <button class="btn btn-primary mt-3" id="add-members">Add Members</button>
+    </div>
+</div>
+
+
+<div id="settings" class="container row">
+    <div id="message-input-form" class="col-9">
+        <input id="chat-message-input" class="form-control" placeholder="Message" type="text" size="120" />
+        <input id="chat-message-submit" class="btn btn-primary btn-sm" type="button" value="Send" />
+    </div>
+    
+    <div class="col-3">
+    {% if owner.id == user.id %}
+        <div class="text-end">
+            <button id="delete-chat" class="btn btn-danger">Delete Chat Room</button>
+        </div>
+    {% else %}
+        <div class="text-end">
+            <button id="leave-chat" class="btn btn-danger">Leave Room</button>
+        </div>
+    {% endif %}
+    </div>
+    <p id="typing-notif">s</p>
+</div>
+
+
+<div id="add-members-view" class="container row">
+    <h3>Add Members</h3>
+    <form id="add-member-form" class="col-8" method="PUT">
+        {% csrf_token %}
+        <div class="form-group">
+            <input id="chat-members" autocomplete="off" required="true" class="form-control mb-3" type="text" name="members" placeholder="Chat Members" />
+        </div>
+        <input class="btn btn-primary" type="submit" value="Add" />
+        <button id="add-cancel" class="btn btn-danger" type="button">Cancel</button>
+    </form>
+    
+    <div id="members" class="col-4">
+        <strong>Current Members</strong>
+        {% for member in members %}
+            <div id="member{{ member.id }}" class="dropdown">
+                <a id="member" href="{% url 'profile' member.id %}" class="dropbtn">{{ member.username }}</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'profile' member.id %}">Profile</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="remove-room-view" class="container">
+    <h3 class="mb-3">Are You Sure You Want To Delete This Room?</h3>
+    <div>
+        <button id="delete-confirm" class="btn btn-danger">Yes</button>
+        <button id="delete-cancel" class="btn btn-primary">No, Nevermind</button>
+    </div>
+</div>
+
+<div id="leave-room-view" class="container">
+    <h3 class="mb-3">Are You Sure You Want To Leave This Room?</h3>
+    <div>
+        <button id="leave-confirm" class="btn btn-danger">Yes</button>
+        <button id="leave-cancel" class="btn btn-primary">No, Nevermind</button>
+    </div>
+</div>
+
+{{ room.id|json_script:"room-id" }} 
+{% endblock %} 
+
+{% block script %}
+<script src="{% static 'chat/lobby.js' %}"></script>
+{% endblock %}

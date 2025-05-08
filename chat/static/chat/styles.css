@@ -1,0 +1,177 @@
+#room-selection {
+    border: 2px solid gray;
+    border-radius: 3px;
+    width: 200px;
+    height: 125px;
+    background-color: transparent;
+    color: gray;
+    position: relative;
+}
+
+#room-selection-name {
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 10;
+}
+
+#friend-selection {
+    border: 2px solid gray;
+    border-radius: 3px;
+    width: 100px;
+    height: 50px;
+    background-color:transparent;
+    color: gray;
+}
+
+#member-count {
+    position: absolute;
+    bottom: 0;
+    left: 10;
+}
+
+#room-selection:hover {
+    border-color: black;
+    color: black;
+    background-color: whitesmoke;
+}
+
+#friend-selection:hover {
+    border-color: black;
+    color: black;
+    background-color: whitesmoke;
+}
+
+#reply-button {
+    display: none;
+    color: gray;
+    position: absolute;
+    right: 10px;
+    padding-top: 0px;
+}
+
+#chat-message {
+    display: inline-block;
+}
+
+#chat-message-block {
+    position: relative;
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+
+#chat-message-block:hover {
+    background: lightgray;
+}
+
+#chat-message-block:hover #reply-button{
+    display: inline;
+}
+
+#message-user {
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+#message-content {
+    padding-left: 45px;
+}
+
+#chat-log {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    height: 525px;
+    max-height: 525px;
+    overflow: auto;
+}
+
+#message-input-form {
+    position: relative;
+    display: inline-block;
+}
+
+#chat-message-input {
+    padding-right: 40px;
+}
+
+#chat-message-submit {
+    position: absolute;
+    top: 4px;
+    right: 18px;
+}
+
+#typing-notif {
+    display: none;
+    color: gray;
+}
+
+#members {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    max-height: 525px;
+    overflow: auto;
+}
+
+#member {
+    font-size: 18px;
+    text-decoration: none;
+    color: gray;
+}
+
+#member:hover{
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#add-members-view {
+    display: none;
+}
+
+#remove-room-view {
+    display: none;
+}
+
+#leave-room-view {
+    display: none;
+}
+
+#mutual-chats {
+    display: none;
+}
+
+#mutual-friends {
+    display: none;
+}
+
+#friends-list {
+    display: none;
+}
+
+#friend-requests {
+    display: none;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.dropdown {
+    display: block;
+    width: fit-content;
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown-content a {
+    color: gray;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}

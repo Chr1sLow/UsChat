@@ -1,0 +1,72 @@
+{% extends "chat/layout.html" %} 
+{% load static %} 
+
+{% block body %}
+<h1>{{ profile.username }}</h1>
+<input id="profile-id" type="hidden" value="{{ profile.id }}" />
+<h3>Friends: {{ friend_count }}</h3>
+
+{% if user.id == profile.id %}
+    <nav class="profile-nav navbar navbar-expand-lg navbar-light">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <button id="friends-button" class="nav-link">Friends</button>
+                </li>
+                <li class="nav-item">
+                    <button id="friend-requests-log" class="nav-link">Friend Requests</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% else %}
+    {% if user.is_authenticated %}
+        {% if profile in user.recieved_friend_requests.all %}
+            <a id="accept-request" class="btn btn-primary">Accept Request</a>
+        {% elif user in profile.recieved_friend_requests.all %}
+            <a class="btn btn-primary disabled">Request Sent</a>
+        {% elif user in profile.friends.all %}
+            <a id="friends" class="btn btn-danger disabled">Friends</a>
+        {% else %}
+            <a id="friend-request" class="btn btn-primary" href="{% url 'friend_request' profile.id %}">Friend Request</a>
+        {% endif %}
+
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a id="mutual-chats-button" class="nav-link">Mutual Chats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="mutual-friends-button" class="nav-link">Mutual Friends</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    {% endif %}
+
+<div id="content">
+    <div id="mutual-chats"></div>
+    <div id="mutual-friends"></div>
+</div>
+{% endif %}
+
+<div id="content">
+    {% if user.id == profile.id %}
+        <div id="friend-requests">
+            {% for friend in profile.recieved_friend_requests.all %}
+            <button id="friend-selection" value="{{ friend.id }}">{{ friend.username }}</button>
+            {% endfor %}
+        </div>
+
+        <div id="friends-list">
+            {% for friend in profile.friends.all %}
+            <button id="friend-selection" value="{{ friend.id }}">{{ friend.username }}</button>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %} {% block script %}
+<script src="{% static 'chat/profile.js' %}"></script>
+{% endblock %}
